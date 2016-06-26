@@ -6,7 +6,7 @@ then
 __BASH_FUNCTIONS__="__BASH_FUNCTIONS__"
 
 # Actual script content
-# ==============================================================================  
+# ==============================================================================
 
 __BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
 
@@ -27,7 +27,11 @@ gAmend() {
     git log -n 1 | head -1 | awk {'print $2'}
 }
 
-# ==============================================================================  
+gUpdateSubmodules() {
+    # Ref: http://stackoverflow.com/a/18799234/1760058
+    git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
+}
+# ==============================================================================
 # End of actual script
 
 fi # __BASH_FUNCTIONS__
