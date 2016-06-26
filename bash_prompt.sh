@@ -12,6 +12,7 @@ __BASH_PROMPT_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}"
 
 source $__BASH_PROMPT_SCRIPT_DIR__/bash_env_vars.sh
 source $__BASH_PROMPT_SCRIPT_DIR__/git-prompt.sh
+source $__BASH_PROMPT_SCRIPT_DIR__/bash_colors.sh
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -49,7 +50,15 @@ evalPromptDirPart(){
 unset color_prompt force_color_prompt
 
 set_bash_prompt(){
-    PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\t\[\033[00m\]:\[\033[01;34m\]$(evalPromptDirPart)\[\e[1;35m\]\$(__git_ps1)\[\033[00m\]\$ "
+    local LAST_CMD_EXIT_CODE="$?"
+    local CMD_DEPENDENT_COLOR=
+    if [[ $LAST_CMD_EXIT_CODE == 0 ]]
+    then
+	CMD_DEPENDENT_COLOR="$BIGreen"
+    else
+	CMD_DEPENDENT_COLOR="$BIRed"
+    fi
+    PS1="${debian_chroot:+($debian_chroot)}\[${CMD_DEPENDENT_COLOR}\]\t\[\033[00m\]:\[${Blue}\]$(evalPromptDirPart)\[\e[1;35m\]\$(__git_ps1)\[\033[00m\]\$ "
 }
 
 PROMPT_COMMAND=set_bash_prompt
