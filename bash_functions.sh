@@ -39,6 +39,22 @@ getAbsPath() {
     echo "$dirNameAbsPath/$fileName"
 }
 
+dockerRemoveDanglingVolumes() {
+    for v in $(docker volume ls -f dangling=true | tr -s ' ' | cut -d' ' -f2 | tail -n+2)
+    do
+      echo "deleting volume: $v"
+      docker volume rm $v
+    done
+}
+
+dockerRemoveUnknownImages() {
+    for img in $(docker images | grep "<none>" | tr -s ' ' | cut -d ' ' -f 3 | sort -u)
+    do
+	echo "deleting image: $img"
+	docker rmi $img;
+    done
+}
+
 # ==============================================================================
 # End of actual script
 
