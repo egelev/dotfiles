@@ -31,6 +31,14 @@ gUpdateSubmodules() {
     # Ref: http://stackoverflow.com/a/18799234/1760058
     git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
 }
+
+getAbsPath() {
+    local fileRelPath=$1
+    local dirNameAbsPath="$( cd "$( dirname "$fileRelPath"  )" && pwd  )"
+    local fileName="$(basename $fileRelPath)"
+    echo "$dirNameAbsPath/$fileName"
+}
+
 # ==============================================================================
 # End of actual script
 
