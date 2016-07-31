@@ -1,4 +1,6 @@
-# NOTE: Put all your local bashrc configuration in $HOME/local_bashrc.sh
+# NOTE: Put all your local bashrc configuration files in $HOME/.bashrc.d.
+# They will get loaded automatically in alphabetical order.
+#
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -59,4 +61,9 @@ fi
 for conf_file in $(ls $__BASHRC_SCRIPT_DIR__/bashrc.d/)
 do
   source $__BASHRC_SCRIPT_DIR__/bashrc.d/$conf_file
+done
+
+for conf_file in $(ls $HOME/.bashrc.d/)
+do
+  source $HOME/.bashrc.d/$conf_file
 done
