@@ -57,7 +57,6 @@ backup_local_dotfiles() {
 
 }
 
-
 get_well_known_dirs_definitions() {
     cat $__DOTFILES_DIR__/bash_env_vars.sh | sed -n '/__WELL_KNOWN_DIRS_DEFINITION_BEGINS__/,/__WELL_KNOWN_DIRS_DEFINITION_ENDS__/p' | grep 'export' | sed -n 's/^[[:space:]]*export[[:space:]]*\([_[:alnum:]]\+\)[[:space:]]*=.*$/\1/p'
 }
