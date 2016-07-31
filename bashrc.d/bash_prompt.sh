@@ -6,7 +6,7 @@ then
 __BASH_PROMPT__="__BASH_PROMPT__"
 
 # Actual script content
-# ==============================================================================  
+# ==============================================================================
 
 __BASH_PROMPT_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
 
@@ -49,19 +49,40 @@ evalPromptDirPart(){
 
 unset color_prompt force_color_prompt
 
-set_bash_prompt(){
-    local LAST_CMD_EXIT_CODE="$?"
-    local CMD_DEPENDENT_COLOR=
-    if [[ $LAST_CMD_EXIT_CODE == 0 ]]
-    then
-	CMD_DEPENDENT_COLOR="$BIGreen"
-    else
-	CMD_DEPENDENT_COLOR="$BIRed"
-    fi
-    PS1="${debian_chroot:+($debian_chroot)}\[${CMD_DEPENDENT_COLOR}\]\t\[\033[00m\]:\[${Blue}\]$(evalPromptDirPart)\[\e[1;35m\]\$(__git_ps1)\[\033[00m\]\$ "
+getBashPromptColorOnSuccess() {
+    echo "$BIGreen"
 }
 
-PROMPT_COMMAND=set_bash_prompt
+getBashPromptColorOnFailure() {
+    echo "$BIRed"
+}
+
+getBashPromptColorDependingOnExitStatus() {
+    local LAST_CMD_EXIT_CODE="$?"
+    if [[ $LAST_CMD_EXIT_CODE == 0 ]]
+    then
+	echo $(getBashPromptColorOnSuccess)
+    else
+	echo $(getBashPromptColorOnFailure)
+    fi
+}
+
+defaultBashPrompt(){
+        PS1="${debian_chroot:+($debian_chroot)}\[${CMD_DEPENDENT_COLOR}\]\t\[\033[00m\]:\[${Blue}\]$(evalPromptDirPart)\[\e[1;35m\]\$(__git_ps1)\[\033[00m\]\$ "
+}
+
+# Overridable
+setBashPrompt() {
+    defaultBashPrompt
+}
+
+__bashColorifiedPromptFunction() {
+    # Export the cmd dependent color to the overridable function
+    export CMD_DEPENDENT_COLOR=$(getBashPromptColorDependingOnExitStatus)
+    setBashPrompt
+}
+
+PROMPT_COMMAND=__bashColorifiedPromptFunction
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -74,7 +95,7 @@ esac
 
 
 
-# ==============================================================================  
+# ==============================================================================
 # End of actual script
 
 fi # __BASH_PROMPT__
