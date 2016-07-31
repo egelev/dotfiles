@@ -33,10 +33,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-if [ -f $__BASHRC_SCRIPT_DIR__/bash_prompt.sh ]; then
-  source $__BASHRC_SCRIPT_DIR__/bash_prompt.sh
-fi
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -47,15 +43,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
-fi
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f $__BASHRC_SCRIPT_DIR__/bash_aliases.sh ]; then
-  source $__BASHRC_SCRIPT_DIR__/bash_aliases.sh
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -69,15 +56,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -f $__BASHRC_SCRIPT_DIR__/bash_env_vars.sh ]; then
-  source $__BASHRC_SCRIPT_DIR__/bash_env_vars.sh
-fi
-
-if [ -f $__BASHRC_SCRIPT_DIR__/bash_functions.sh ]; then
-  source $__BASHRC_SCRIPT_DIR__/bash_functions.sh
-fi
-
-if [ -f $HOME/local_bashrc.sh ]; then
-  source $HOME/local_bashrc.sh
-fi
-
+for conf_file in $(ls $__BASHRC_SCRIPT_DIR__/bashrc.d/)
+do
+  source $__BASHRC_SCRIPT_DIR__/bashrc.d/$conf_file
+done
