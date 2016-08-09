@@ -69,6 +69,11 @@ getBashPromptColorDependingOnExitStatus() {
 
 defaultBashPrompt(){
         PS1="${debian_chroot:+($debian_chroot)}\[${CMD_DEPENDENT_COLOR}\]\t\[\033[00m\]:\[${Blue}\]$(evalPromptDirPart)\[\e[1;35m\]\$(__git_ps1)\[\033[00m\]\$ "
+	if [[ -n $SSH_CONNECTION ]]
+	then
+	    local LOCAL_IP=$(echo $SSH_CONNECTION | tr -s ' ' | cut -d' ' -f 3)
+	    PS1="(\[$IWhite\]$LOCAL_IP):$PS1"
+	fi
 }
 
 # Overridable
