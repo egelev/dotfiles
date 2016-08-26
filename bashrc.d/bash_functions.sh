@@ -48,7 +48,7 @@ dockerRemoveDanglingVolumes() {
 }
 
 dockerRemoveUnknownImages() {
-    for img in $(docker images | grep "<none>" | tr -s ' ' | cut -d ' ' -f 3 | sort -u)
+    for img in $(docker images --filter "dangling=true" --quiet)
     do
 	echo "deleting image: $img"
 	docker rmi $img;
