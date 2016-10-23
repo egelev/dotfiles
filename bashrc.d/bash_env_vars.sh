@@ -23,6 +23,9 @@ export JAVA_ROOT=$TOOLS/java
 
 export PATH=$HOME/bin:$PATH
 
+# Default vim daylight interval
+export VIM_DAYLIGHT_START="8:00"
+export VIM_DAYLIGHT_END="18:00"
 
 # ==============================================================================
 # End of actual script
