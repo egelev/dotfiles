@@ -55,6 +55,45 @@ dockerRemoveUnknownImages() {
     done
 }
 
+
+parseUrl() {
+   local url=$1
+   local parse_request=$2
+
+   local optional="\?"
+   local protocol="\([.[:alnum:]+-]\+:[\/]\+\)" # 1
+   local hostname="\([[:alnum:].-]*\)" # 2
+   local port="\(:[[:digit:]]*\)" # 3
+   local path="\(\/[^?]*\)" # 4
+   local query="\(?[^#]*\)" # 5
+   local fragment="\(#.*\)" # 6
+   local regex="${protocol}${optional}${hostname}${port}${optional}${path}${optional}${query}${optional}${fragment}${optional}"
+
+   case ${parse_request} in
+      "protocol")
+         echo $(echo "${url}" | sed -n -e "s/^${regex}$/\1/p")
+         ;;
+      "hostname")
+         echo $(echo "${url}" | sed -n -e "s/^${regex}$/\2/p")
+         ;;
+      "port")
+         echo $(echo "${url}" | sed -n -e "s/^${regex}$/\3/p" | tr -d ':')
+         ;;
+      "path")
+         path=$(echo "${url}" | sed -n -e "s/^${regex}$/\4/p")
+         echo ${path#/}
+         ;;
+      "query")
+         query=$(echo "${url}" | sed -n -e "s/^${regex}$/\5/p")
+         echo ${query#?}
+         ;;
+      "fragment")
+         fragment=$(echo "${url}" | sed -n -e "s/^${regex}$/\6/p")
+         echo ${fragment#\#}
+         ;;
+   esac
+}
+
 # ==============================================================================
 # End of actual script
 
