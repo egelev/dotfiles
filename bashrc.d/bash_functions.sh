@@ -94,6 +94,17 @@ parseUrl() {
    esac
 }
 
+function getProperty() {
+    local fileName=$1
+    local propertiyPatterns="${@:2}"
+
+    for prop in ${propertiyPatterns}
+    do
+       p=${prop//\./\\.}
+       grep "${p}" $fileName | sed -n -e "s/^[[:space:]]*${p}[[:space:]]*[=:][[:space:]]*\(.*\)$/\1/p"
+    done
+}
+
 # ==============================================================================
 # End of actual script
 
