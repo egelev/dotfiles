@@ -105,6 +105,20 @@ function getProperty() {
     done
 }
 
+dockerRemoveByTag() {
+    local tag=$1
+    if [ -z "${tag}" ]
+    then
+        echo "Usage dockerRemoveByTag <tag>"
+        return 1
+    fi
+
+    for name in $(docker image ls | grep ${tag} | tr -s ' ' | cut -d ' ' -f 1)
+    do
+        docker image rm ${name}:${tag}
+    done
+}
+
 # ==============================================================================
 # End of actual script
 
