@@ -119,6 +119,11 @@ dockerRemoveByTag() {
     done
 }
 
+getPIDbyPort() {
+   local port=$1
+   netstat -tuplen 2>/dev/null  | grep "${PROVISIONING_PUBLIC_PORT}" | tr -s ' ' | cut -d' ' -f 9 | sed  -e "s/\([[:digit:]]*\)\/.*/\1/g"
+}
+
 # ==============================================================================
 # End of actual script
 

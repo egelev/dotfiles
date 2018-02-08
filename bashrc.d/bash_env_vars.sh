@@ -21,7 +21,7 @@ export JAVA_ROOT=$TOOLS/java
 
 # __WELL_KNOWN_DIRS_DEFINITION_ENDS__
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$PATH:.
 
 # Set default editor
 export VISUAL=vim
