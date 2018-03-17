@@ -12,6 +12,7 @@ __BASH_COLORS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}"
 
 # Reset
 Color_Off='\e[0m'       # Text Reset
+White='\033[00m'        # White
 
 # Regular Colors
 Black='\e[0;30m'        # Black
@@ -21,7 +22,7 @@ Yellow='\e[0;33m'       # Yellow
 Blue='\e[0;34m'         # Blue
 Purple='\e[0;35m'       # Purple
 Cyan='\e[0;36m'         # Cyan
-White='\e[0;37m'        # White
+Grey='\e[0;37m'         # Grey
 
 # Bold
 BBlack='\e[1;30m'       # Black
@@ -31,7 +32,7 @@ BYellow='\e[1;33m'      # Yellow
 BBlue='\e[1;34m'        # Blue
 BPurple='\e[1;35m'      # Purple
 BCyan='\e[1;36m'        # Cyan
-BWhite='\e[1;37m'       # White
+BGrey='\e[1;37m'        # Grey
 
 # Underline
 UBlack='\e[4;30m'       # Black
@@ -41,7 +42,7 @@ UYellow='\e[4;33m'      # Yellow
 UBlue='\e[4;34m'        # Blue
 UPurple='\e[4;35m'      # Purple
 UCyan='\e[4;36m'        # Cyan
-UWhite='\e[4;37m'       # White
+UGrey='\e[4;37m'        # Grey
 
 # Background
 On_Black='\e[40m'       # Black
@@ -51,7 +52,7 @@ On_Yellow='\e[43m'      # Yellow
 On_Blue='\e[44m'        # Blue
 On_Purple='\e[45m'      # Purple
 On_Cyan='\e[46m'        # Cyan
-On_White='\e[47m'       # White
+On_Grey='\e[47m'        # Grey
 
 # High Intensity
 IBlack='\e[0;90m'       # Black
@@ -61,7 +62,7 @@ IYellow='\e[0;93m'      # Yellow
 IBlue='\e[0;94m'        # Blue
 IPurple='\e[0;95m'      # Purple
 ICyan='\e[0;96m'        # Cyan
-IWhite='\e[0;97m'       # White
+IGrey='\e[0;97m'        # Grey
 
 # Bold High Intensity
 BIBlack='\e[1;90m'      # Black
@@ -71,7 +72,7 @@ BIYellow='\e[1;93m'     # Yellow
 BIBlue='\e[1;94m'       # Blue
 BIPurple='\e[1;95m'     # Purple
 BICyan='\e[1;96m'       # Cyan
-BIWhite='\e[1;97m'      # White
+BIGrey='\e[1;97m'       # Grey
 
 # High Intensity backgrounds
 On_IBlack='\e[0;100m'   # Black
@@ -81,7 +82,7 @@ On_IYellow='\e[0;103m'  # Yellow
 On_IBlue='\e[0;104m'    # Blue
 On_IPurple='\e[0;105m'  # Purple
 On_ICyan='\e[0;106m'    # Cyan
-On_IWhite='\e[0;107m'   # White
+On_IGrey='\e[0;107m'    # Grey
 
 # ==============================================================================
 # End of actual script
