@@ -6,8 +6,6 @@ __DOTFILES_DIR__=$(readlink -f $__SETUP_SCRIPT_DIR__)
 
 __BASHRC_DIR__=$__DOTFILES_DIR__/bashrc.d
 
-source ${__BASHRC_DIR__}/bash_env_vars.sh
-
 replace_file() {
 
     local original_file=$1
@@ -38,26 +36,21 @@ replace_file() {
 
 backup_local_dotfiles() {
 
-    local BASHRC=$HOME/.bashrc
-    local NEW_BASHRC=$__DOTFILES_DIR__/bashrc
-    local BKP_BASHRC=$HOME/.bashrc.d/50-bashrc.sh
+    BASHRC=$HOME/.bashrc
+    NEW_BASHRC=$__DOTFILES_DIR__/bashrc
+    BKP_BASHRC=$HOME/.bashrc.d/50-bashrc.sh
     replace_file $BASHRC $NEW_BASHRC $BKP_BASHRC
     echo "Put all your local bashrc configuration files in '$(dirname $BKP_BASHRC)'. They will get loaded automatically in alphabetical order."
 
-    local VIM_DIR=$HOME/.vim
-    local NEW_VIM_DIR=$__DOTFILES_DIR__/vim
-    local BKP_VIM_DIR=$HOME/.vim_bkp_dir
+    VIM_DIR=$HOME/.vim
+    NEW_VIM_DIR=$__DOTFILES_DIR__/vim
+    BKP_VIM_DIR=$HOME/.vim_bkp_dir
     replace_file $VIM_DIR $NEW_VIM_DIR $BKP_VIM_DIR
 
-    local VIMRC=$HOME/.vimrc
-    local NEW_VIMRC=$NEW_VIM_DIR/vimrc
-    local BKP_VIMRC=$HOME/.vimrc_bkp_file
+    VIMRC=$HOME/.vimrc
+    NEW_VIMRC=$NEW_VIM_DIR/vimrc
+    BKP_VIMRC=$HOME/.vimrc_bkp_file
     replace_file $VIMRC $NEW_VIMRC $BKP_VIMRC
-
-    local NVM_ORIG_DIR=${NVM_DIR}
-    local NEW_NVM_DIR=${__DOTFILES_DIR__}/nvm
-    local BKP_NVM_DIR=${HOME}/.nvm_bkp
-    replace_file ${NVM_ORIG_DIR} ${NEW_NVM_DIR} ${BKP_NVM_DIR}
 }
 
 get_well_known_dirs_definitions() {

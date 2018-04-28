@@ -31,8 +31,6 @@ export EDITOR="${VISUAL}"
 export VIM_DAYLIGHT_START="8:00"
 export VIM_DAYLIGHT_END="18:00"
 
-export NVM_DIR=${HOME}/.nvm
-
 
 # ==============================================================================
 # End of actual script
