@@ -1,0 +1,30 @@
+{
+    "git.ignoreLegacyWarning": true,
+    "window.zoomLevel": -1,
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "vim.easymotion": true,
+    "vim.hlsearch": true,
+    "vim.surround": true,
+    "vim.searchHighlightColor": "rgba(255, 255, 102, 0.3)",
+    "symbolOutline.doSelect": false,
+    "symbolOutline.expandNodes": [
+        "Class"
+    ],
+    "explorer.openEditors.visible": 0,
+    "[html]": {
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        }
+    },
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#4c4d4e",
+        "editorBracketMatch.border": "#a3f159"
+    }
+}
