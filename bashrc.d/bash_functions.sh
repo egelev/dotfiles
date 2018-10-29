@@ -124,6 +124,11 @@ getPIDbyPort() {
    netstat -tuplen 2>/dev/null  | grep "${port}" | tr -s ' ' | cut -d' ' -f 9 | sed  -e "s/\([[:digit:]]*\)\/.*/\1/g"
 }
 
+getWordCountOfFile() {
+   local file=$1
+   fmt -1 <${file}  | grep -E -o -i '[[:alnum:]]{3,}' | sort | uniq -ci | sort -nr
+}
+
 # ==============================================================================
 # End of actual script
 
