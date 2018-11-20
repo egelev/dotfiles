@@ -46,12 +46,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
-for conf_file in $(ls $__BASHRC_SCRIPT_DIR__/bashrc.d/)
+for conf_file in $(ls ${__BASHRC_SCRIPT_DIR__}/bashrc.d/)
 do
-  source $__BASHRC_SCRIPT_DIR__/bashrc.d/$conf_file
+  source ${__BASHRC_SCRIPT_DIR__}/bashrc.d/${conf_file}
 done
 
-for conf_file in $(ls $HOME/.bashrc.d/)
+for conf_file in $(ls ${HOME}/.bashrc.d/)
 do
-  source $HOME/.bashrc.d/$conf_file
+  source ${HOME}/.bashrc.d/${conf_file}
 done

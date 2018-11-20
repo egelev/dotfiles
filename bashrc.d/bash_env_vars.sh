@@ -14,14 +14,14 @@ __BASH_ENV_VARS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]
 
 # __WELL_KNOWN_DIRS_DEFINITION_BEGINS__
 
-export DEV_DIR=$HOME/dev
-export WS=$DEV_DIR/workspaces
-export TOOLS=$DEV_DIR/tools
-export JAVA_ROOT=$TOOLS/java
+export DEV_DIR=${HOME}/dev
+export WS=${DEV_DIR}/workspaces
+export TOOLS=${DEV_DIR}/tools
+export JAVA_ROOT=${TOOLS}/java
 
 # __WELL_KNOWN_DIRS_DEFINITION_ENDS__
 
-export PATH=$HOME/bin:$PATH:.
+export PATH=${HOME}/bin:${PATH}:.
 
 # Set default editor
 export VISUAL=vim

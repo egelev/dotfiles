@@ -10,8 +10,8 @@ __BASH_FUNCTIONS__="__BASH_FUNCTIONS__"
 
 __BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
 
-source $__BASH_FUNCTIONS_SCRIPT_DIR__/bash_env_vars.sh
-source $__BASH_FUNCTIONS_SCRIPT_DIR__/git-prompt.sh
+source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/bash_env_vars.sh
+source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/git-prompt.sh
 
 rpm_unpack() {
     rpm2cpio $1 | cpio -idmv
@@ -34,24 +34,24 @@ gUpdateSubmodules() {
 
 getAbsPath() {
     local fileRelPath=$1
-    local dirNameAbsPath="$( cd "$( dirname "$fileRelPath"  )" && pwd  )"
-    local fileName="$(basename $fileRelPath)"
-    echo "$dirNameAbsPath/$fileName"
+    local dirNameAbsPath="$( cd "$( dirname "${fileRelPath}"  )" && pwd  )"
+    local fileName="$(basename ${fileRelPath})"
+    echo "${dirNameAbsPath}/${fileName}"
 }
 
 dockerRemoveDanglingVolumes() {
     for v in $(docker volume ls -f dangling=true | tr -s ' ' | cut -d' ' -f2 | tail -n+2)
     do
-      echo "deleting volume: $v"
-      docker volume rm $v
+      echo "deleting volume: ${v}"
+      docker volume rm ${v}
     done
 }
 
 dockerRemoveUnknownImages() {
     for img in $(docker images --filter "dangling=true" --quiet)
     do
-	echo "deleting image: $img"
-	docker rmi $img;
+	echo "deleting image: ${img}"
+	docker rmi ${img};
     done
 }
 
@@ -101,7 +101,7 @@ function getProperty() {
     for prop in ${propertiyPatterns}
     do
        p=${prop//\./\\.}
-       grep "${p}" $fileName | sed -n -e "s/^[[:space:]]*${p}[[:space:]]*[=:][[:space:]]*\(.*\)$/\1/p"
+       grep "${p}" ${fileName} | sed -n -e "s/^[[:space:]]*${p}[[:space:]]*[=:][[:space:]]*\(.*\)$/\1/p"
     done
 }
 

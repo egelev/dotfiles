@@ -10,9 +10,9 @@ __BASH_PROMPT__="__BASH_PROMPT__"
 
 __BASH_PROMPT_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
 
-source $__BASH_PROMPT_SCRIPT_DIR__/bash_env_vars.sh
-source $__BASH_PROMPT_SCRIPT_DIR__/git-prompt.sh
-source $__BASH_PROMPT_SCRIPT_DIR__/bash_colors.sh
+source ${__BASH_PROMPT_SCRIPT_DIR__}/bash_env_vars.sh
+source ${__BASH_PROMPT_SCRIPT_DIR__}/git-prompt.sh
+source ${__BASH_PROMPT_SCRIPT_DIR__}/bash_colors.sh
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -20,7 +20,7 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
+case "${TERM}" in
     xterm-color) color_prompt=yes;;
 esac
 
@@ -29,7 +29,7 @@ esac
 # should be on the output of commands, not on the prompt
 force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
+if [ -n "${force_color_prompt}" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
@@ -42,24 +42,24 @@ fi
 
 evalPromptDirPart(){
     local PROMPT_DIR_PART=`pwd`
-    [[ $PROMPT_DIR_PART == $WS* ]] && PROMPT_DIR_PART=~/ws${PROMPT_DIR_PART#$WS}
-    [[ $PROMPT_DIR_PART == $HOME* ]] && PROMPT_DIR_PART=~${PROMPT_DIR_PART#$HOME}
-    printf $PROMPT_DIR_PART
+    [[ ${PROMPT_DIR_PART} == ${WS}* ]] && PROMPT_DIR_PART=~/ws${PROMPT_DIR_PART#$WS}
+    [[ ${PROMPT_DIR_PART} == ${HOME}* ]] && PROMPT_DIR_PART=~${PROMPT_DIR_PART#$HOME}
+    printf ${PROMPT_DIR_PART}
 }
 
 unset color_prompt force_color_prompt
 
 getBashPromptColorOnSuccess() {
-    echo "$BIGreen"
+    echo "${BIGreen}"
 }
 
 getBashPromptColorOnFailure() {
-    echo "$BIRed"
+    echo "${BIRed}"
 }
 
 getBashPromptColorDependingOnExitStatus() {
     local LAST_CMD_EXIT_CODE="$?"
-    if [[ $LAST_CMD_EXIT_CODE == 0 ]]
+    if [[ ${LAST_CMD_EXIT_CODE} == 0 ]]
     then
 	echo $(getBashPromptColorOnSuccess)
     else
@@ -69,10 +69,10 @@ getBashPromptColorDependingOnExitStatus() {
 
 defaultBashPrompt(){
         PS1="${debian_chroot:+($debian_chroot)}\[${CMD_DEPENDENT_COLOR}\]\t\[${White}\]:\[${Blue}\]$(evalPromptDirPart)\[${BPurple}\]\$(__git_ps1)\[${White}\]\$ "
-	if [[ -n $SSH_CONNECTION ]]
+	if [[ -n ${SSH_CONNECTION} ]]
 	then
-	    local LOCAL_IP=$(echo $SSH_CONNECTION | tr -s ' ' | cut -d' ' -f 3)
-	    PS1="(\[$IWhite\]$LOCAL_IP):$PS1"
+	    local LOCAL_IP=$(echo ${SSH_CONNECTION} | tr -s ' ' | cut -d' ' -f 3)
+	    PS1="(\[${IWhite}\]${LOCAL_IP}):${PS1}"
 	fi
 }
 
@@ -90,9 +90,9 @@ __bashColorifiedPromptFunction() {
 PROMPT_COMMAND=__bashColorifiedPromptFunction
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
+case "${TERM}" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]${PS1}"
     ;;
 *)
     ;;
