@@ -13,33 +13,33 @@ __BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0
 source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/bash_env_vars.sh
 source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/git-prompt.sh
 
-rpm_unpack() {
+function rpm_unpack() {
     rpm2cpio $1 | cpio -idmv
 }
 
-git_top(){
+function git_top(){
     echo $(git log -n 1 | head -1 | cut -d' ' -f2)
 }
 
-gAmend() {
+function gAmend() {
     git add -u
     git commit --amend --no-edit
     git log -n 1 | head -1 | awk {'print $2'}
 }
 
-gUpdateSubmodules() {
+function gUpdateSubmodules() {
     # Ref: http://stackoverflow.com/a/18799234/1760058
     git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
 }
 
-getAbsPath() {
+function getAbsPath() {
     local fileRelPath=$1
     local dirNameAbsPath="$( cd "$( dirname "${fileRelPath}"  )" && pwd  )"
     local fileName="$(basename ${fileRelPath})"
     echo "${dirNameAbsPath}/${fileName}"
 }
 
-dockerRemoveDanglingVolumes() {
+function dockerRemoveDanglingVolumes() {
     for v in $(docker volume ls -f dangling=true | tr -s ' ' | cut -d' ' -f2 | tail -n+2)
     do
       echo "deleting volume: ${v}"
@@ -47,7 +47,7 @@ dockerRemoveDanglingVolumes() {
     done
 }
 
-dockerRemoveUnknownImages() {
+function dockerRemoveUnknownImages() {
     for img in $(docker images --filter "dangling=true" --quiet)
     do
 	echo "deleting image: ${img}"
@@ -56,7 +56,7 @@ dockerRemoveUnknownImages() {
 }
 
 
-parseUrl() {
+function parseUrl() {
    local url=$1
    local parse_request=$2
 
@@ -105,7 +105,7 @@ function getProperty() {
     done
 }
 
-dockerRemoveByTag() {
+function dockerRemoveByTag() {
     local tag=$1
     if [ -z "${tag}" ]
     then
@@ -119,12 +119,12 @@ dockerRemoveByTag() {
     done
 }
 
-getPIDbyPort() {
+function getPIDbyPort() {
    local port=$1
    netstat -tuplen 2>/dev/null  | grep "${port}" | tr -s ' ' | cut -d' ' -f 9 | sed  -e "s/\([[:digit:]]*\)\/.*/\1/g"
 }
 
-getWordCountOfFile() {
+function getWordCountOfFile() {
    local file=$1
    fmt -1 <${file}  | grep -E -o -i '[[:alnum:]]{3,}' | sort | uniq -ci | sort -nr
 }
