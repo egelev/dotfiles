@@ -148,6 +148,28 @@ function testColours() {
         echo
 }
 
+function clearIdeaFiles() {
+      local idea_dirs="$(find . -iname  "*.idea" -type d)"
+      if [ -n "${idea_dirs}" ]
+      then
+         for d in ${idea_dirs}
+         do
+            echo "Deleting ${d}"
+            rm -rf ${d}
+         done
+      fi
+
+      local imls="$(find . -iname  "*.iml")"
+      if [ -n "${imls}" ]
+      then
+         for f in ${imls}
+         do
+            echo "Deleting ${f}"
+            rm -rf ${f}
+         done
+      fi
+}
+
 # ==============================================================================
 # End of actual script
 
