@@ -31,10 +31,21 @@ function getChrootPromptPrefix() {
     echo "${debian_chroot:+($debian_chroot)}"
 }
 
+function replacePathPrefix() {
+    local path=${1}
+    local prefix=${2}
+    local replacement=${3}
+
+    [[ ${path} == ${prefix}* ]] && path=${replacement}${path#$prefix}
+    local expanded_prefix=$(readlink -f ${prefix})
+    [[ ${path} == ${expanded_prefix}* ]] && path=${replacement}${path#$expanded_prefix}
+    printf ${path}
+}
+
 function getDirectoryToken(){
     local PROMPT_DIR_PART=`pwd`
-    [[ ${PROMPT_DIR_PART} == ${WS}* ]] && PROMPT_DIR_PART=~/ws${PROMPT_DIR_PART#$WS}
-    [[ ${PROMPT_DIR_PART} == ${HOME}* ]] && PROMPT_DIR_PART=~${PROMPT_DIR_PART#$HOME}
+    PROMPT_DIR_PART=$(replacePathPrefix ${PROMPT_DIR_PART} ${WS} "~/ws")
+    PROMPT_DIR_PART=$(replacePathPrefix ${PROMPT_DIR_PART} ${HOME} "~")
     printf ${PROMPT_DIR_PART}
 }
 
