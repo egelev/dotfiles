@@ -16,6 +16,7 @@ __BASH_ALIASES_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}
 
 alias ll='ls -alF'
 alias la='ls -A'
+alias lh='ls -CFlh'
 alias l='ls -CF'
 
 # enable color support of ls and also add handy aliases
