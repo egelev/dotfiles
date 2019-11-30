@@ -17,10 +17,6 @@ function rpm_unpack() {
     rpm2cpio $1 | cpio -idmv
 }
 
-function git_top(){
-    echo $(git log -n 1 | head -1 | cut -d' ' -f2)
-}
-
 function gAmend() {
     git add -u
     git commit --amend --no-edit
