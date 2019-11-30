@@ -6,7 +6,7 @@ __DOTFILES_DIR__=$(readlink -f ${__SETUP_SCRIPT_DIR__})
 
 __BASHRC_DIR__=${__DOTFILES_DIR__}/bashrc.d
 
-replace_file() {
+function replace_file() {
 
     local original_file=$1
     local new_file=$2
@@ -34,7 +34,7 @@ replace_file() {
     fi
 }
 
-backup_local_dotfiles() {
+function backup_local_dotfiles() {
 
     BASHRC=${HOME}/.bashrc
     NEW_BASHRC=${__DOTFILES_DIR__}/bashrc
@@ -53,11 +53,11 @@ backup_local_dotfiles() {
     replace_file ${VIMRC} ${NEW_VIMRC} ${BKP_VIMRC}
 }
 
-get_well_known_dirs_definitions() {
+function get_well_known_dirs_definitions() {
     cat ${__BASHRC_DIR__}/bash_env_vars.sh | sed -n '/__WELL_KNOWN_DIRS_DEFINITION_BEGINS__/,/__WELL_KNOWN_DIRS_DEFINITION_ENDS__/p' | grep 'export' | sed -n 's/^[[:space:]]*export[[:space:]]*\([_[:alnum:]]\+\)[[:space:]]*=.*$/\1/p'
 }
 
-ensure_all_well_known_dirs() {
+function ensure_all_well_known_dirs() {
     source ${__BASHRC_DIR__}/bash_env_vars.sh
     for dir in $(get_well_known_dirs_definitions)
     do
@@ -70,7 +70,49 @@ ensure_all_well_known_dirs() {
     done
 }
 
-main() {
+function download_file() {
+    local url=${1}
+    local targetFileName=${2}
+    if [[ -d ${targetFileName} ]]
+    then
+	targetFileName="${targetFileName}/$(basename ${url})"
+    fi
+
+    local downloadedFile=$(mktemp "/tmp/$(basename ${targetFileName}).XXXXXX")
+    echo ${downloadedFile}
+    echo "Downloading ${url}"
+    wget --quiet --show-progress --output-document=${downloadedFile} ${url}
+    if [[ -e ${targetFileName} ]]
+    then
+	if (diff ${targetFileName} ${downloadedFile} 2>&1 1>/dev/null)
+	then
+	    # No diff
+	    echo "The file on ${url} is the same as ${targetFileName}"
+	    rm ${downloadedFile}
+	    return 0
+	else
+	    # Diff - backup
+	    echo "File ${targetFileName} already exists."
+	    mv ${targetFileName} "${targetFileName}.bkp"
+	    echo "Backup available at ${targetFileName}.bkp"
+	fi
+    fi
+    mkdir -p $(dirname ${targetFileName})
+    mv ${downloadedFile} ${targetFileName}
+    echo "Downloaded to ${targetFileName}"
+}
+
+function download_additional_scripts() {
+    local list="
+	https://gist.githubusercontent.com/egelev/2e6b57d5a8ba62cf6df6fff2878c3fd4/raw/c4852f7703dbc71779adab088f0f7ae7cd7184b3/connect_bluetooth_headphones.sh
+    "
+    for url in ${list}
+    do
+	download_file ${url} ${HOME}/bin
+    done
+}
+
+function main() {
     backup_local_dotfiles
     ensure_all_well_known_dirs
 }
