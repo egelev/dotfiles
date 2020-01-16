@@ -23,9 +23,16 @@ function gAmend() {
     git log -n 1 | head -1 | awk {'print $2'}
 }
 
-function gUpdateSubmodules() {
-    # Ref: http://stackoverflow.com/a/18799234/1760058
-    git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
+function gSubmoduleRemove() {
+   local path=${1}
+   # Remove the submodule entry from .git/config
+   git submodule deinit -f ${path}
+
+   # Remove the submodule directory from the superproject's .git/modules directory
+   rm -rf .git/modules/${path}
+
+   # Remove the entry in .gitmodules and remove the submodule directory located at path/to/submodule
+   git rm -f ${path}
 }
 
 function getAbsPath() {
