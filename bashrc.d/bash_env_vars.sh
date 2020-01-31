@@ -14,7 +14,8 @@ __BASH_ENV_VARS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]
 
 # __WELL_KNOWN_DIRS_DEFINITION_BEGINS__
 
-export DEV_DIR=${HOME}/dev
+export DATA_DIR=${HOME}/data
+export DEV_DIR=${DATA_DIR}/dev
 export WS=${DEV_DIR}/workspaces
 export TOOLS=${DEV_DIR}/tools
 export JAVA_ROOT=${TOOLS}/java
