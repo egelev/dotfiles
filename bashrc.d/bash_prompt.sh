@@ -57,6 +57,7 @@ function getPromptSuffixSymbol() {
     echo "\$"
 }
 
+# Overridable
 function getVirtualEnvName() {
     if [ ! -z ${VIRTUAL_ENV+x} ]
     then
