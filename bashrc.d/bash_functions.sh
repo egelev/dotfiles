@@ -152,6 +152,11 @@ function testColours() {
 }
 
 function clearIdeaFiles() {
+      # TODO
+      # .idea
+      # *.iws
+      # *.iml
+      # *.ipr
       local idea_dirs="$(find . -iname  "*.idea" -type d)"
       if [ -n "${idea_dirs}" ]
       then
