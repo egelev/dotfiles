@@ -117,7 +117,13 @@ function __bashColorifiedPromptFunction() {
     setBashPrompt
 }
 
-PROMPT_COMMAND=__bashColorifiedPromptFunction
+if ((BASH_VERSINFO[0] > 5 || BASH_VERSINFO[0] == 5 && BASH_VERSINFO[1] >= 1))
+then
+    PROMPT_COMMAND=(__bashColorifiedPromptFunction)
+else
+    PROMPT_COMMAND=__bashColorifiedPromptFunction
+fi
+
 
 
 # ==============================================================================
