@@ -1,0 +1,34 @@
+<keymap version="1" name="Custom keymaps" parent="Default for GNOME">
+  <action id="ChangesView.ToggleCommitUi" />
+  <action id="CheckinProject" />
+  <action id="EditorDown">
+    <keyboard-shortcut first-keystroke="down" />
+    <keyboard-shortcut first-keystroke="ctrl n" />
+  </action>
+  <action id="EditorUp">
+    <keyboard-shortcut first-keystroke="up" />
+    <keyboard-shortcut first-keystroke="ctrl p" />
+  </action>
+  <action id="FileChooser.NewFolder">
+    <keyboard-shortcut first-keystroke="alt insert" />
+  </action>
+  <action id="FileChooser.TogglePathBar" />
+  <action id="Git.Commit.Stage" />
+  <action id="GotoClass" />
+  <action id="InsertLiveTemplate" />
+  <action id="NextTab">
+    <keyboard-shortcut first-keystroke="alt right" />
+    <keyboard-shortcut first-keystroke="ctrl k" />
+  </action>
+  <action id="ParameterInfo">
+    <keyboard-shortcut first-keystroke="alt p" />
+  </action>
+  <action id="PreviousTab">
+    <keyboard-shortcut first-keystroke="alt left" />
+    <keyboard-shortcut first-keystroke="ctrl j" />
+  </action>
+  <action id="TypeHierarchy">
+    <keyboard-shortcut first-keystroke="ctrl h" />
+    <keyboard-shortcut first-keystroke="alt h" />
+  </action>
+</keymap>
