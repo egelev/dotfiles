@@ -178,6 +178,11 @@ function clearIdeaFiles() {
       fi
 }
 
+function randomPassword() {
+   local length=${1:-32}
+   echo $(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${length} | head -n 1)
+}
+
 # ==============================================================================
 # End of actual script
 
