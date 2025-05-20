@@ -8,7 +8,7 @@ __BASH_COLORS__="__BASH_COLORS__"
 # Actual script content
 # ==============================================================================
 
-__BASH_COLORS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
+__BASH_COLORS_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
 # Reset
 Color_Off='\e[0m'       # Text Reset

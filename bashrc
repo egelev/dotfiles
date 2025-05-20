@@ -5,7 +5,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-__BASHRC_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
+__BASHRC_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
 # If not running interactively, don't do anything
 case $- in
@@ -47,13 +47,13 @@ if ! shopt -oq posix; then
 fi
 
 # Source files from repo
-for conf_file in $(ls ${__BASHRC_SCRIPT_DIR__}/bashrc.d/)
+for conf_file in $(ls "${__BASHRC_SCRIPT_DIR__}/bashrc.d/")
 do
-  source ${__BASHRC_SCRIPT_DIR__}/bashrc.d/${conf_file}
+  source "${__BASHRC_SCRIPT_DIR__}/bashrc.d/${conf_file}"
 done
 
 # Source files from HOME
-for conf_file in $(ls ${HOME}/.bashrc.d/)
+for conf_file in $(ls "${HOME}/.bashrc.d/")
 do
-  source ${HOME}/.bashrc.d/${conf_file}
+  source "${HOME}/.bashrc.d/${conf_file}"
 done

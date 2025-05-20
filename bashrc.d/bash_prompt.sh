@@ -8,7 +8,7 @@ __BASH_PROMPT__="__BASH_PROMPT__"
 # Actual script content
 # ==============================================================================
 
-__BASH_PROMPT_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
+__BASH_PROMPT_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
 source ${__BASH_PROMPT_SCRIPT_DIR__}/bash_colors.sh
 source ${__BASH_PROMPT_SCRIPT_DIR__}/bash_env_vars.sh

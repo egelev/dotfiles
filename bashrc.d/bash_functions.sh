@@ -8,8 +8,7 @@ __BASH_FUNCTIONS__="__BASH_FUNCTIONS__"
 # Actual script content
 # ==============================================================================
 
-__BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
-
+__BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  
 source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/bash_env_vars.sh
 source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/git-prompt.sh
 
@@ -181,6 +180,38 @@ function clearIdeaFiles() {
 function randomPassword() {
    local length=${1:-32}
    echo $(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${length} | head -n 1)
+}
+
+function download_file() {
+    local url=${1}
+    local targetFileName=${2}
+    if [[ -d ${targetFileName} ]]
+    then
+	targetFileName="${targetFileName}/$(basename ${url})"
+    fi
+
+    local downloadedFile=$(mktemp "/tmp/$(basename ${targetFileName}).XXXXXX")
+    echo ${downloadedFile}
+    echo "Downloading ${url}"
+    wget --quiet --show-progress --output-document=${downloadedFile} ${url}
+    if [[ -e ${targetFileName} ]]
+    then
+	if (diff ${targetFileName} ${downloadedFile} 2>&1 1>/dev/null)
+	then
+	    # No diff
+	    echo "The file on ${url} is the same as ${targetFileName}"
+	    rm ${downloadedFile}
+	    return 0
+	else
+	    # Diff - backup
+	    echo "File ${targetFileName} already exists."
+	    mv ${targetFileName} "${targetFileName}.bkp"
+	    echo "Backup available at ${targetFileName}.bkp"
+	fi
+    fi
+    mkdir -p $(dirname ${targetFileName})
+    mv ${downloadedFile} ${targetFileName}
+    echo "Downloaded to ${targetFileName}"
 }
 
 # ==============================================================================

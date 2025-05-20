@@ -8,7 +8,7 @@ __GIT_PROMPT__="__GIT_PROMPT__"
 # Actual script content
 # ==============================================================================
 
-__GIT_PROMPT_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
+__GIT_PROMPT_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
 
 # bash/zsh git prompt support

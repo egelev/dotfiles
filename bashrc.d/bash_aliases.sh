@@ -10,7 +10,7 @@ __BASH_ALIASES__="__BASH_ALIASES__"
 
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-__BASH_ALIASES_SCRIPT_DIR__=$( cd -L $( dirname $(readlink -f "${BASH_SOURCE[0]}") ) && pwd  )
+__BASH_ALIASES_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
 # Bash aliases
 
