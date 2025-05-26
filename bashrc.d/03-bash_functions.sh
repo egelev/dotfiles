@@ -9,8 +9,8 @@ __BASH_FUNCTIONS__="__BASH_FUNCTIONS__"
 # ==============================================================================
 
 __BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
-source "${__BASH_FUNCTIONS_SCRIPT_DIR__}/bash_env_vars.sh"
-source "${__BASH_FUNCTIONS_SCRIPT_DIR__}/git-prompt.sh"
+source "${__BASH_FUNCTIONS_SCRIPT_DIR__}/01-bash_env_vars.sh"
+source "${__BASH_FUNCTIONS_SCRIPT_DIR__}/10-git-prompt.sh"
 
 function rpm_unpack() {
     rpm2cpio $1 | cpio -idmv

@@ -10,9 +10,9 @@ __BASH_PROMPT__="__BASH_PROMPT__"
 
 __BASH_PROMPT_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
-source "${__BASH_PROMPT_SCRIPT_DIR__}/bash_colors.sh"
-source "${__BASH_PROMPT_SCRIPT_DIR__}/bash_env_vars.sh"
-source "${__BASH_PROMPT_SCRIPT_DIR__}/git-prompt.sh"
+source "${__BASH_PROMPT_SCRIPT_DIR__}/04-bash_colors.sh"
+source "${__BASH_PROMPT_SCRIPT_DIR__}/01-bash_env_vars.sh"
+source "${__BASH_PROMPT_SCRIPT_DIR__}/10-git-prompt.sh"
 
 
 function getSshConnectionPrefix() {
