@@ -6,6 +6,8 @@ __DOTFILES_DIR__=$(readlink -f "${__SETUP_SCRIPT_DIR__}")
 
 __BASHRC_DIR__=${__DOTFILES_DIR__}/bashrc.d
 
+export MSYS=winsymlinks:nativestrict
+
 function replace_file() {
 
     local original_file="$1"

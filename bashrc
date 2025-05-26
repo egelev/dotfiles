@@ -47,13 +47,13 @@ if ! shopt -oq posix; then
 fi
 
 # Source files from repo
-for conf_file in $(ls "${__BASHRC_SCRIPT_DIR__}/bashrc.d/")
+for conf_file in $(\ls "${__BASHRC_SCRIPT_DIR__}/bashrc.d/")
 do
   source "${__BASHRC_SCRIPT_DIR__}/bashrc.d/${conf_file}"
 done
 
 # Source files from HOME
-for conf_file in $(ls "${HOME}/.bashrc.d/")
+for conf_file in $(\ls "${HOME}/.bashrc.d/")
 do
   source "${HOME}/.bashrc.d/${conf_file}"
 done

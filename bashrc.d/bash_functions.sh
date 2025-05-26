@@ -8,9 +8,9 @@ __BASH_FUNCTIONS__="__BASH_FUNCTIONS__"
 # Actual script content
 # ==============================================================================
 
-__BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  
-source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/bash_env_vars.sh
-source ${__BASH_FUNCTIONS_SCRIPT_DIR__}/git-prompt.sh
+__BASH_FUNCTIONS_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
+source "${__BASH_FUNCTIONS_SCRIPT_DIR__}/bash_env_vars.sh"
+source "${__BASH_FUNCTIONS_SCRIPT_DIR__}/git-prompt.sh"
 
 function rpm_unpack() {
     rpm2cpio $1 | cpio -idmv
@@ -23,21 +23,21 @@ function gAmend() {
 }
 
 function gSubmoduleRemove() {
-   local path=${1}
+   local path="${1}"
    # Remove the submodule entry from .git/config
-   git submodule deinit -f ${path}
+   git submodule deinit -f "${path}"
 
    # Remove the submodule directory from the superproject's .git/modules directory
-   rm -rf .git/modules/${path}
+   rm -rf ".git/modules/${path}"
 
    # Remove the entry in .gitmodules and remove the submodule directory located at path/to/submodule
-   git rm -f ${path}
+   git rm -f "${path}"
 }
 
 function getAbsPath() {
-    local fileRelPath=$1
+    local fileRelPath="$1"
     local dirNameAbsPath="$( cd "$( dirname "${fileRelPath}"  )" && pwd  )"
-    local fileName="$(basename ${fileRelPath})"
+    local fileName="$(basename "${fileRelPath}")"
     echo "${dirNameAbsPath}/${fileName}"
 }
 
@@ -45,7 +45,7 @@ function dockerRemoveDanglingVolumes() {
     for v in $(docker volume ls -f dangling=true | tr -s ' ' | cut -d' ' -f2 | tail -n+2)
     do
       echo "deleting volume: ${v}"
-      docker volume rm ${v}
+      docker volume rm "${v}"
     done
 }
 
@@ -53,48 +53,48 @@ function dockerRemoveUnknownImages() {
     for img in $(docker images --filter "dangling=true" --quiet)
     do
 	echo "deleting image: ${img}"
-	docker rmi ${img};
+	docker rmi "${img}";
     done
 }
 
 
-function parseUrl() {
-   local url=$1
-   local parse_request=$2
-
-   local optional="\?"
-   local protocol="\([.[:alnum:]+-]\+:[\/]\+\)" # 1
-   local hostname="\([[:alnum:].-]*\)" # 2
-   local port="\(:[[:digit:]]*\)" # 3
-   local path="\(\/[^?]*\)" # 4
-   local query="\(?[^#]*\)" # 5
-   local fragment="\(#.*\)" # 6
-   local regex="${protocol}${optional}${hostname}${port}${optional}${path}${optional}${query}${optional}${fragment}${optional}"
-
-   case ${parse_request} in
-      "protocol")
-         echo $(echo "${url}" | sed -n -e "s/^${regex}$/\1/p")
-         ;;
-      "hostname")
-         echo $(echo "${url}" | sed -n -e "s/^${regex}$/\2/p")
-         ;;
-      "port")
-         echo $(echo "${url}" | sed -n -e "s/^${regex}$/\3/p" | tr -d ':')
-         ;;
-      "path")
-         path=$(echo "${url}" | sed -n -e "s/^${regex}$/\4/p")
-         echo ${path#/}
-         ;;
-      "query")
-         query=$(echo "${url}" | sed -n -e "s/^${regex}$/\5/p")
-         echo ${query#?}
-         ;;
-      "fragment")
-         fragment=$(echo "${url}" | sed -n -e "s/^${regex}$/\6/p")
-         echo ${fragment#\#}
-         ;;
-   esac
-}
+# function parseUrl() {
+#    local url="$1"
+#    local parse_request="$2"
+# 
+#    local optional="\?"
+#    local protocol="\([.[:alnum:]+-]\+:[\/]\+\)" # 1
+#    local hostname="\([[:alnum:].-]*\)" # 2
+#    local port="\(:[[:digit:]]*\)" # 3
+#    local path="\(\/[^?]*\)" # 4
+#    local query="\(?[^#]*\)" # 5
+#    local fragment="\(#.*\)" # 6
+#    local regex="${protocol}${optional}${hostname}${port}${optional}${path}${optional}${query}${optional}${fragment}${optional}"
+# 
+#    case ${parse_request} in
+#       "protocol")
+#          echo $(echo "${url}" | sed -n -e "s/^${regex}$/\1/p")
+#          ;;
+#       "hostname")
+#          echo $(echo "${url}" | sed -n -e "s/^${regex}$/\2/p")
+#          ;;
+#       "port")
+#          echo $(echo "${url}" | sed -n -e "s/^${regex}$/\3/p" | tr -d ':')
+#          ;;
+#       "path")
+#          path=$(echo "${url}" | sed -n -e "s/^${regex}$/\4/p")
+#          echo ${path#/}
+#          ;;
+#       "query")
+#          query=$(echo "${url}" | sed -n -e "s/^${regex}$/\5/p")
+#          echo ${query#?}
+#          ;;
+#       "fragment")
+#          fragment=$(echo "${url}" | sed -n -e "s/^${regex}$/\6/p")
+#          echo ${fragment#\#}
+#          ;;
+#    esac
+# }
 
 function getProperty() {
     local fileName=$1
@@ -156,13 +156,13 @@ function clearIdeaFiles() {
       # *.iws
       # *.iml
       # *.ipr
-      local idea_dirs="$(find . -iname  "*.idea" -type d)"
+      local idea_dirs="$(find "." -iname  "*.idea" -type d)"
       if [ -n "${idea_dirs}" ]
       then
          for d in ${idea_dirs}
          do
             echo "Deleting ${d}"
-            rm -rf ${d}
+            rm -rf "${d}"
          done
       fi
 
@@ -172,7 +172,7 @@ function clearIdeaFiles() {
          for f in ${imls}
          do
             echo "Deleting ${f}"
-            rm -rf ${f}
+            rm -rf "${f}"
          done
       fi
 }
@@ -184,33 +184,33 @@ function randomPassword() {
 
 function download_file() {
     local url=${1}
-    local targetFileName=${2}
-    if [[ -d ${targetFileName} ]]
+    local targetFileName="${2}"
+    if [[ -d "${targetFileName}" ]]
     then
 	targetFileName="${targetFileName}/$(basename ${url})"
     fi
 
-    local downloadedFile=$(mktemp "/tmp/$(basename ${targetFileName}).XXXXXX")
+    local downloadedFile=$(mktemp "/tmp/$(basename "${targetFileName}").XXXXXX")
     echo ${downloadedFile}
     echo "Downloading ${url}"
-    wget --quiet --show-progress --output-document=${downloadedFile} ${url}
+    wget --quiet --show-progress --output-document="${downloadedFile}" ${url}
     if [[ -e ${targetFileName} ]]
     then
-	if (diff ${targetFileName} ${downloadedFile} 2>&1 1>/dev/null)
+	if (diff "${targetFileName}" "${downloadedFile}" 2>&1 1>/dev/null)
 	then
 	    # No diff
 	    echo "The file on ${url} is the same as ${targetFileName}"
-	    rm ${downloadedFile}
+	    rm "${downloadedFile}"
 	    return 0
 	else
 	    # Diff - backup
 	    echo "File ${targetFileName} already exists."
-	    mv ${targetFileName} "${targetFileName}.bkp"
+	    mv "${targetFileName}" "${targetFileName}.bkp"
 	    echo "Backup available at ${targetFileName}.bkp"
 	fi
     fi
-    mkdir -p $(dirname ${targetFileName})
-    mv ${downloadedFile} ${targetFileName}
+    mkdir -p "$(dirname "${targetFileName}")"
+    mv "${downloadedFile}" "${targetFileName}"
     echo "Downloaded to ${targetFileName}"
 }
 

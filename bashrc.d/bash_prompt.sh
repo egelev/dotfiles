@@ -10,15 +10,15 @@ __BASH_PROMPT__="__BASH_PROMPT__"
 
 __BASH_PROMPT_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
-source ${__BASH_PROMPT_SCRIPT_DIR__}/bash_colors.sh
-source ${__BASH_PROMPT_SCRIPT_DIR__}/bash_env_vars.sh
-source ${__BASH_PROMPT_SCRIPT_DIR__}/git-prompt.sh
+source "${__BASH_PROMPT_SCRIPT_DIR__}/bash_colors.sh"
+source "${__BASH_PROMPT_SCRIPT_DIR__}/bash_env_vars.sh"
+source "${__BASH_PROMPT_SCRIPT_DIR__}/git-prompt.sh"
 
 
 function getSshConnectionPrefix() {
     if [[ -n ${SSH_CONNECTION} ]]
     then
-	local LOCAL_IP=$(echo ${SSH_CONNECTION} | tr -s ' ' | cut -d' ' -f 3)
+	local LOCAL_IP=$(echo "${SSH_CONNECTION}" | tr -s ' ' | cut -d' ' -f 3)
 	echo "(\[${IWhite}\]${LOCAL_IP})"
     fi
 }
@@ -32,21 +32,21 @@ function getChrootPromptPrefix() {
 }
 
 function replacePathPrefix() {
-    local path=${1}
-    local prefix=${2}
-    local replacement=${3}
+    local path="${1}"
+    local prefix="${2}"
+    local replacement="${3}"
 
-    [[ ${path} == ${prefix}* ]] && path=${replacement}${path#$prefix}
-    local expanded_prefix=$(readlink -f ${prefix})
-    [[ ${path} == ${expanded_prefix}* ]] && path=${replacement}${path#$expanded_prefix}
-    printf ${path}
+    [[ ${path} == ${prefix}* ]] && path="${replacement}${path#"$prefix"}"
+    local expanded_prefix="$(readlink -f "${prefix}")"
+    [[ ${path} == ${expanded_prefix}* ]] && path="${replacement}${path#"$expanded_prefix"}"
+    printf "${path}"
 }
 
 function getDirectoryToken(){
-    local PROMPT_DIR_PART=`pwd`
-    PROMPT_DIR_PART=$(replacePathPrefix ${PROMPT_DIR_PART} ${WS} "~/ws")
-    PROMPT_DIR_PART=$(replacePathPrefix ${PROMPT_DIR_PART} ${HOME} "~")
-    printf ${PROMPT_DIR_PART}
+    local PROMPT_DIR_PART="$(pwd)"
+    PROMPT_DIR_PART="$(replacePathPrefix "${PROMPT_DIR_PART}" "${WS}" "~/ws")"
+    PROMPT_DIR_PART="$(replacePathPrefix "${PROMPT_DIR_PART}" "${HOME}" "~")"
+    printf "${PROMPT_DIR_PART}"
 }
 
 function getStatusColouredToken() {
@@ -75,7 +75,7 @@ function appendSpaceToPrompt() {
 
 function defaultBashPrompt(){
         result=
-	for token in $(getSshConnectionPrefix) $(getChrootPromptPrefix) "$(getStatusColouredToken)\t" "\[${White}\]:" "\[${Blue}\]$(getDirectoryToken)" "\[${BPurple}\]\$(__git_ps1)" "\[${Cyan}\]$(getVirtualEnvName)"
+	for token in "$(getSshConnectionPrefix)" "$(getChrootPromptPrefix)" "$(getStatusColouredToken)\t" "\[${White}\]:" "\[${Blue}\]"$(getDirectoryToken)"" "\[${BPurple}\]\$(__git_ps1)" "\[${Cyan}\]$(getVirtualEnvName)"
 	do
 	    result="${result}${token}"
 
@@ -105,15 +105,15 @@ function _getBashPromptColorDependingOnExitStatus() {
     local LAST_CMD_EXIT_CODE="$?"
     if [[ ${LAST_CMD_EXIT_CODE} == 0 ]]
     then
-	echo $(getBashPromptColorOnSuccess)
+	echo "$(getBashPromptColorOnSuccess)"
     else
-	echo $(getBashPromptColorOnFailure)
+	echo "$(getBashPromptColorOnFailure)"
     fi
 }
 
 function __bashColorifiedPromptFunction() {
     # Export the cmd dependent color to the overridable function
-    export CMD_DEPENDENT_COLOR=$(_getBashPromptColorDependingOnExitStatus)
+    export CMD_DEPENDENT_COLOR="$(_getBashPromptColorDependingOnExitStatus)"
     setBashPrompt
 }
 
