@@ -6,7 +6,9 @@ __DOTFILES_DIR__=$(readlink -f "${__SETUP_SCRIPT_DIR__}")
 
 __BASHRC_DIR__=${__DOTFILES_DIR__}/bashrc.d
 
-export MSYS=winsymlinks:nativestrict
+if [[ "$OSTYPE" == "msys"* ]]; then
+    export MSYS=winsymlinks:nativestrict
+fi
 
 function replace_file() {
 

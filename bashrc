@@ -7,6 +7,11 @@
 
 __BASHRC_SCRIPT_DIR__=$( cd -L "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd  )
 
+
+if [[ "$OSTYPE" == "msys"* ]]; then
+    export MSYS=winsymlinks:nativestrict
+fi
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
