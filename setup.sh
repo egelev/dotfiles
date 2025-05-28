@@ -62,12 +62,12 @@ function backup_local_dotfiles() {
 }
 
 function get_well_known_dirs_definitions() {
-    cat "${__BASHRC_DIR__}/bash_env_vars.sh" | sed -n '/__WELL_KNOWN_DIRS_DEFINITION_BEGINS__/,/__WELL_KNOWN_DIRS_DEFINITION_ENDS__/p' | grep 'export' | sed -n 's/^[[:space:]]*export[[:space:]]*\([_[:alnum:]]\+\)[[:space:]]*=.*$/\1/p'
+    cat "${__BASHRC_DIR__}/01-bash_env_vars.sh" | sed -n '/__WELL_KNOWN_DIRS_DEFINITION_BEGINS__/,/__WELL_KNOWN_DIRS_DEFINITION_ENDS__/p' | grep 'export' | sed -n 's/^[[:space:]]*export[[:space:]]*\([_[:alnum:]]\+\)[[:space:]]*=.*$/\1/p'
 }
 
 function ensure_all_well_known_dirs() {
     echo "Ensuring well-known directories"
-    source "${__BASHRC_DIR__}/bash_env_vars.sh"
+    source "${__BASHRC_DIR__}/01-bash_env_vars.sh"
     for dir in $(get_well_known_dirs_definitions)
     do
 	local expanded_dir=$(eval "echo \$${dir}")
